@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+# About the project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a client-side, which queries the GitHub API and shows the most popular repositories for a given user.
 
-Currently, two official plugins are available:
+This project was built using the following technologies
+- React js
+- Vite
+- Tailwind css
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to run
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+npm install i
+```
+```
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+ To view/search a github profile, simply add the username to the URL.
+
+ ```
+ http://localhost:5173/user/:username
+ ```
+
+ To move the order just drag as in the example below.
+
+ ## Preview
+<img width=100% src="./src/assets/video.gif">
+
+
+## Website hosting
+
+This project is hosted on vercel, follow the link below.
+
+note: change 'username ' to a real username
+```
+https://desbravador-challenge-6gvk-4nbk3b7qj-gabrielnode.vercel.app/user/:username
+```
