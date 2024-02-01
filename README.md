@@ -34,5 +34,5 @@ This project is hosted on vercel, follow the link below.
 
 note: change 'username ' to a real username
 ```
-https://desbravador-challenge-6gvk-4nbk3b7qj-gabrielnode.vercel.app/user/:username
+https://desbravador-challenge-git-master-gabrielnode.vercel.app/user/:username
 ```
