@@ -9,7 +9,8 @@ import { CONSTANTS } from "./enums";
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<User | null>();
-  const [repos, setRepos] = useState<Repository[]>([]);
+  const [currentRepos, setCurrentRepos] = useState<Repository[]>([]);
+  const [allRepos, setAllRepos] = useState<Repository[]>([]);
   const [currentPage, setCurrentPage] = useState(CONSTANTS.CURRENT_PAGE);
   const [reposPerPage] = useState(CONSTANTS.REPOS_PER_PAGE);
   const [totalPages, setTotalPages] = useState(CONSTANTS.TOTAL_PAGES);
@@ -29,19 +30,18 @@ const UserProfile: React.FC = () => {
 
   const handleGetAllRepos = useCallback(async () => {
     if (username) {
+      const perPage = 100;
+      const condition = true;
       let allRepos: Repository[] = [];
       let page = 1;
-      const perPage = 100;
-
-      const condition = true;
 
       while (condition) {
         const repos = await fetchRepositories(username, perPage, page);
         if (repos.length === 0) break;
 
         allRepos = [...allRepos, ...repos];
-
         page++;
+
         if (repos.length < perPage) break;
       }
       return allRepos;
@@ -55,7 +55,7 @@ const UserProfile: React.FC = () => {
         setTotalRepos(user.public_repos);
 
         const allRepos = await handleGetAllRepos();
-        setRepos(
+        setAllRepos(
           allRepos?.sort((a, b) => b.stargazers_count - a.stargazers_count) ||
             []
         );
@@ -64,12 +64,15 @@ const UserProfile: React.FC = () => {
     fetchRepos();
   }, [handleGetAllRepos, reposPerPage, user, username]);
 
-  const indexOfLastRepo = currentPage * reposPerPage;
-  const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
-  const currentRepos: Repository[] = repos.slice(
-    indexOfFirstRepo,
-    indexOfLastRepo
-  );
+  useEffect(() => {
+    const indexOfLastRepo = currentPage * reposPerPage;
+    const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
+    const currentRepos: Repository[] = allRepos.slice(
+      indexOfFirstRepo,
+      indexOfLastRepo
+    );
+    setCurrentRepos(currentRepos);
+  }, [allRepos, currentPage, reposPerPage]);
 
   const changePage = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -100,10 +103,10 @@ const UserProfile: React.FC = () => {
   };
 
   const handleUpdateRepos = (updatedRepos: Repository[]): void => {
-    setRepos(updatedRepos);
+    setCurrentRepos(updatedRepos);
   };
 
-  if (!repos.length && !currentRepos.length) {
+  if (!currentRepos.length) {
     return <Loading />;
   }
 
